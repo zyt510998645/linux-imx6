@@ -111,8 +111,10 @@ static struct fb_videomode lcdif_modedb[] = {
 		FB_VMODE_NONINTERLACED, /* vmode (Video Mode) */
 		0, /* flags */
 	},
+    // zhangyt 2016/8/21
+    
 	{
-	/* 800x600 @ 60 Hz , pixel clk @ 40MHz */
+	// 800x600 @ 60 Hz , pixel clk @ 40MHz
 	"LSA40AT9001", 60, 800, 600, 1000000000 / (800+10+46+210) * 1000 / (600+1+23+12) / 60,
 	.left_margin = 46, .right_margin = 210,
 	.upper_margin = 23, .lower_margin = 12,
@@ -120,6 +122,17 @@ static struct fb_videomode lcdif_modedb[] = {
 	.sync = FB_SYNC_CLK_LAT_FALL,
 	.vmode = FB_VMODE_NONINTERLACED,
 	.flag = 0,},
+    
+	{
+	// 1024x600 @ 60 Hz , pixel clk @ 40MHz
+	"LCD_FT5406", 60, 1024, 600, 1000000000 / (1024+10+46+210) * 1000 / (600+1+23+12) / 60,
+	.left_margin = 46, .right_margin = 210,
+	.upper_margin = 23, .lower_margin = 12,
+	.hsync_len = 10, .vsync_len = 1,
+	.sync = FB_SYNC_CLK_LAT_FALL,
+	.vmode = FB_VMODE_NONINTERLACED,
+	.flag = 0,},
+    //end
 	{
 	/* 480x800 @ 57 Hz , pixel clk @ 27MHz */
 	"LB043", 57, 480, 800, 25000,
@@ -184,11 +197,9 @@ static struct fb_videomode lcdif_modedb[] = {
 	 .sync = 0,
 	 .vmode = FB_VMODE_NONINTERLACED,
 	 .flag = 0,},
-
+    /*
 	{
-	 /*
-	  * Shenzhen 240x320
-	  */
+	  // Shenzhen 240x320
 	"KD024FM", 60, 240, 320, 1000000000000ULL / ((240+10+38+10)*(320+4+8+4)*60),
 	 .left_margin = 10, .right_margin = 38,
 	 .upper_margin = 4, .lower_margin = 8,
@@ -196,6 +207,7 @@ static struct fb_videomode lcdif_modedb[] = {
 	 .sync = 0,
 	 .vmode = FB_VMODE_NONINTERLACED,
 	 .flag = 0,},
+     */
 
 	/*
 	 * BT656/BT1120 mode
@@ -283,6 +295,8 @@ static int lcdif_init(struct mxc_dispdrv_handle *disp,
 	struct fb_videomode *modedb = lcdif_modedb;
 	int modedb_sz = lcdif_modedb_sz;
 
+    // zhangyt 2016-08-21 11:39:31
+    printk("hello!-------------------lcdif_init--mxc_lcdif.c------------------------\n");
 	/* use platform defined ipu/di */
 	ret = ipu_di_to_crtc(dev, plat_data->ipu_id,
 			     plat_data->disp_id, &setting->crtc);
@@ -454,6 +468,8 @@ static struct platform_driver mxc_lcdif_driver = {
 
 static int __init mxc_lcdif_init(void)
 {
+    // zhangyt 2016-08-21 11:39:43
+    printk("world!-------------------mxc_lcdif_init--mxc_lcdif.c------------------------\n");
 	return platform_driver_register(&mxc_lcdif_driver);
 }
 
